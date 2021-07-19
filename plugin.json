@@ -1,11 +1,7 @@
 {
-    "id": "com.mattermost.plugin-starter-template",
-    "name": "Plugin Starter Template",
-    "description": "This plugin serves as a starting point for writing a Mattermost plugin.",
-    "homepage_url": "https://github.com/mattermost/mattermost-plugin-starter-template",
-    "support_url": "https://github.com/mattermost/mattermost-plugin-starter-template/issues",
-    "release_notes_url": "https://github.com/mattermost/mattermost-plugin-starter-template/releases/tag/v0.1.0",
-    "icon_path": "assets/starter-template-icon.svg",
+    "id": "com.mattermost.moodle-notification",
+    "name": "Moodle Notification Plugin",
+    "description": "Mattermost plugin to manage Moodle Notifications",
     "version": "0.1.0",
     "min_server_version": "5.12.0",
     "server": {
@@ -22,6 +18,15 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [
+            {
+                "key": "WebhookSecret",
+                "display_name": "Webhook Secret:",
+                "type": "generated",
+                "help_text": "The webhook secret set in Moodle.",
+                "regenerate_help_text": "Regenerates the secret for Moodle Notification Plugin. Regenerating this key invalidates any existing token.",
+                "default": null
+            }
+        ]
     }
 }
