@@ -1,4 +1,4 @@
-module github.com/mattermost/mattermost-plugin-moodle-notification/build
+module github.com/Brightscout/mattermost-plugin-moodle-notification/build
 
 go 1.12
 
