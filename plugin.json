@@ -20,7 +20,7 @@
         "footer": "",
         "settings": [
             {
-                "key": "WebhookSecret",
+                "key": "Secret",
                 "display_name": "Webhook Secret:",
                 "type": "generated",
                 "help_text": "The webhook secret set in Moodle.",
