@@ -12,6 +12,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/mattermost/mattermost-server/v5/model"
+
+	"github.com/Brightscout/mattermost-plugin-moodle-notification/server/serializer"
 )
 
 // InitAPI initializes the REST API
@@ -43,7 +45,45 @@ func (p *Plugin) handleNotify(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), status)
 		return
 	}
-	// TODO: Add logic here to get user by email and create a direct message.
+
+	notification, err := serializer.NotificationFromJSON(r.Body)
+	if err != nil {
+		p.API.LogError("Error decoding request body.", "Error", err.Error())
+		http.Error(w, "Could not decode request body", http.StatusBadRequest)
+		return
+	}
+
+	if notification.Email == "" || notification.Message == "" {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	user, appErr := p.API.GetUserByEmail(notification.Email)
+	if appErr != nil {
+		p.API.LogError(fmt.Sprintf(appErr.Error(), notification.Email))
+		http.Error(w, appErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	channel, cErr := p.API.GetDirectChannel(user.Id, p.botID)
+	if cErr != nil {
+		p.API.LogError(fmt.Sprintf(cErr.Error(), notification.Email))
+		http.Error(w, cErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, pErr := p.API.CreatePost(&model.Post{
+		UserId:    p.botID,
+		ChannelId: channel.Id,
+		Message:   notification.Message,
+	})
+
+	if pErr != nil {
+		p.API.LogError(fmt.Sprintf("Could not send DM to user: %v", pErr.Error()))
+		http.Error(w, fmt.Sprintf("Could not send DM to user: %v", pErr.Error()), http.StatusInternalServerError)
+		return
+	}
+
 	returnStatusOK(w)
 }
 
