@@ -72,11 +72,8 @@ func (p *Plugin) handleNotify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, pErr := p.API.CreatePost(&model.Post{
-		UserId:    p.botID,
-		ChannelId: channel.Id,
-		Message:   notification.Message,
-	})
+	post := notification.GetNotificationPost(p.botID, channel.Id)
+	_, pErr := p.API.CreatePost(post)
 
 	if pErr != nil {
 		p.API.LogError(fmt.Sprintf("Could not send DM to user: %v", pErr.Error()))

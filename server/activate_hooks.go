@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	BotUserName    = "moodle_notification"
-	BotDisplayName = "Moodle Notification Bot"
+	BotUserName    = "moodle"
+	BotDisplayName = "Moodle"
 	BotDescription = "A bot account created by the moodle notification plugin."
 )
 
