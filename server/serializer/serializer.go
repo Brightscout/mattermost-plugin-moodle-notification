@@ -6,6 +6,8 @@ import (
 
 	md "github.com/JohannesKaufmann/html-to-markdown"
 	"github.com/mattermost/mattermost-server/v5/model"
+
+	"github.com/Brightscout/mattermost-plugin-moodle-notification/server/utils"
 )
 
 type Notification struct {
@@ -43,7 +45,7 @@ func (notification *Notification) GetNotificationPost(botID, channelID string) *
 	slackAttachment := &model.SlackAttachment{
 		Title: subject,
 		Color: "#FF8000",
-		Text:  message,
+		Text:  utils.ReplaceEmbeddedImages(message),
 	}
 
 	model.ParseSlackAttachment(post, []*model.SlackAttachment{slackAttachment})

@@ -2,7 +2,7 @@
     "id": "com.mattermost.moodle-notification",
     "name": "Moodle Notification Plugin",
     "description": "Mattermost plugin to manage Moodle Notifications",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "min_server_version": "5.12.0",
     "server": {
         "executables": {
