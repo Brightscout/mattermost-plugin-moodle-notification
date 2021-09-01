@@ -25,3 +25,11 @@ func ReplaceEmbeddedImages(md string) string {
 	})
 	return s
 }
+
+// This function wrap <span> tag around html entity like &raquo; &nbsp;
+func NormaliseHTMLEntities(text string) string {
+	re := regexp.MustCompile(`&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});`)
+	return re.ReplaceAllStringFunc(text, func(str string) string {
+		return fmt.Sprintf("<span> %s </span>", str)
+	})
+}

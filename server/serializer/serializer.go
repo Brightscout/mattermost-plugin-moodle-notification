@@ -25,7 +25,9 @@ func (notification *Notification) ToJSON() []byte {
 func (notification *Notification) GetNotificationPost(botID, channelID string) *model.Post {
 	converter := md.NewConverter("", true, nil)
 	subject := notification.Subject
-	message, _ := converter.ConvertString(notification.MessageHTML)
+
+	htmlMessage := utils.NormaliseHTMLEntities(notification.MessageHTML)
+	message, _ := converter.ConvertString(htmlMessage)
 
 	// This covers the case if notification.MessageHTML is empty
 	// or if there is an error while converting the HTML to markdown

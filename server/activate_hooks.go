@@ -6,12 +6,6 @@ import (
 	"github.com/mattermost/mattermost-server/v5/model"
 )
 
-const (
-	BotUserName    = "moodle"
-	BotDisplayName = "Moodle"
-	BotDescription = "A bot account created by the moodle notification plugin."
-)
-
 func (p *Plugin) OnActivate() error {
 	if err := p.initBotUser(); err != nil {
 		return err
@@ -28,9 +22,9 @@ func (p *Plugin) OnActivate() error {
 
 func (p *Plugin) initBotUser() error {
 	botID, err := p.Helpers.EnsureBot(&model.Bot{
-		Username:    BotUserName,
-		DisplayName: BotDisplayName,
-		Description: BotDescription,
+		Username:    p.configuration.BotUserName,
+		DisplayName: p.configuration.BotDisplayName,
+		Description: p.configuration.BotDescription,
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to ensure bot")

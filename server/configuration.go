@@ -19,7 +19,10 @@ import (
 // If you add non-reference types to your configuration struct, be sure to rewrite Clone as a deep
 // copy appropriate for your types.
 type configuration struct {
-	Secret string `json:"Secret"`
+	Secret         string `json:"Secret"`
+	BotUserName    string `json:"BotUserName"`
+	BotDisplayName string `json:"BotDisplayName"`
+	BotDescription string `json:"BotDescription"`
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if
@@ -32,6 +35,9 @@ func (c *configuration) Clone() *configuration {
 // ProcessConfiguration processes the config.
 func (c *configuration) ProcessConfiguration() error {
 	c.Secret = strings.TrimSpace(c.Secret)
+	c.BotUserName = strings.TrimSpace(c.BotUserName)
+	c.BotDisplayName = strings.TrimSpace(c.BotDisplayName)
+	c.BotDescription = strings.TrimSpace(c.BotDescription)
 
 	return nil
 }
@@ -41,7 +47,15 @@ func (c *configuration) IsValid() error {
 	if len(c.Secret) == 0 {
 		return errors.New("please generate Secret from plugin system console settings")
 	}
-
+	if len(c.BotUserName) == 0 {
+		return errors.New("bot Username cannot be empty")
+	}
+	if len(c.BotDisplayName) == 0 {
+		return errors.New("bot Display Name cannot be empty")
+	}
+	if len(c.BotDescription) == 0 {
+		return errors.New("bot Description cannot be empty")
+	}
 	return nil
 }
 
@@ -105,6 +119,10 @@ func (p *Plugin) OnConfigurationChange() error {
 	}
 
 	p.setConfiguration(configuration)
+
+	if err := p.initBotUser(); err != nil {
+		return errors.Wrap(err, "failed to update bot")
+	}
 
 	return nil
 }
