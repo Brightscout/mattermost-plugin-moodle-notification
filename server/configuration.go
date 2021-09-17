@@ -2,6 +2,7 @@ package main
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -18,6 +19,10 @@ import (
 // If you add non-reference types to your configuration struct, be sure to rewrite Clone as a deep
 // copy appropriate for your types.
 type configuration struct {
+	Secret         string `json:"Secret"`
+	BotUserName    string `json:"BotUserName"`
+	BotDisplayName string `json:"BotDisplayName"`
+	BotDescription string `json:"BotDescription"`
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if
@@ -25,6 +30,33 @@ type configuration struct {
 func (c *configuration) Clone() *configuration {
 	var clone = *c
 	return &clone
+}
+
+// ProcessConfiguration processes the config.
+func (c *configuration) ProcessConfiguration() error {
+	c.Secret = strings.TrimSpace(c.Secret)
+	c.BotUserName = strings.TrimSpace(c.BotUserName)
+	c.BotDisplayName = strings.TrimSpace(c.BotDisplayName)
+	c.BotDescription = strings.TrimSpace(c.BotDescription)
+
+	return nil
+}
+
+// IsValid checks if all needed fields are set.
+func (c *configuration) IsValid() error {
+	if len(c.Secret) == 0 {
+		return errors.New("please generate Secret from plugin system console settings")
+	}
+	if len(c.BotUserName) == 0 {
+		return errors.New("bot Username cannot be empty")
+	}
+	if len(c.BotDisplayName) == 0 {
+		return errors.New("bot Display Name cannot be empty")
+	}
+	if len(c.BotDescription) == 0 {
+		return errors.New("bot Description cannot be empty")
+	}
+	return nil
 }
 
 // getConfiguration retrieves the active configuration under lock, making it safe to use
@@ -77,7 +109,20 @@ func (p *Plugin) OnConfigurationChange() error {
 		return errors.Wrap(err, "failed to load plugin configuration")
 	}
 
+	if err := configuration.ProcessConfiguration(); err != nil {
+		p.API.LogError("Error in ProcessConfiguration.", "Error", err.Error())
+		return errors.Wrap(err, "failed to process configuration")
+	}
+
+	if err := configuration.IsValid(); err != nil {
+		return errors.Wrap(err, "failed to validate configuration")
+	}
+
 	p.setConfiguration(configuration)
+
+	if err := p.initBotUser(); err != nil {
+		return errors.Wrap(err, "failed to update bot")
+	}
 
 	return nil
 }

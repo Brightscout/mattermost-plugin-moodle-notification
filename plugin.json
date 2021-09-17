@@ -1,12 +1,8 @@
 {
-    "id": "com.mattermost.plugin-starter-template",
-    "name": "Plugin Starter Template",
-    "description": "This plugin serves as a starting point for writing a Mattermost plugin.",
-    "homepage_url": "https://github.com/mattermost/mattermost-plugin-starter-template",
-    "support_url": "https://github.com/mattermost/mattermost-plugin-starter-template/issues",
-    "release_notes_url": "https://github.com/mattermost/mattermost-plugin-starter-template/releases/tag/v0.1.0",
-    "icon_path": "assets/starter-template-icon.svg",
-    "version": "0.1.0",
+    "id": "com.mattermost.moodle-notification",
+    "name": "Moodle Notification Plugin",
+    "description": "Mattermost plugin to manage Moodle Notifications",
+    "version": "1.0.0",
     "min_server_version": "5.12.0",
     "server": {
         "executables": {
@@ -22,6 +18,36 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [
+            {
+                "key": "Secret",
+                "display_name": "Webhook Secret:",
+                "type": "generated",
+                "help_text": "The webhook secret set in Moodle.",
+                "regenerate_help_text": "Regenerates the secret for Moodle Notification Plugin. Regenerating this key invalidates any existing token.",
+                "default": null
+            },
+            {
+                "key": "BotUserName",
+                "display_name": "Moodle Bot Username:",
+                "type": "text",
+                "help_text": "Username must begin with a letter and contain between 3 and 22 characters including numbers, lowercase letters, and the symbols \".\", \"-\", and \"_\".",
+                "default": "moodle"
+            },
+            {
+                "key": "BotDisplayName",
+                "display_name": "Moodle Bot Display Name:",
+                "type": "text",
+                "help_text": "",
+                "default": "Moodle"
+            },
+            {
+                "key": "BotDescription",
+                "display_name": "Moodle Bot Description:",
+                "type": "text",
+                "help_text": "",
+                "default": "A bot account created by the moodle notification plugin."
+            }
+        ]
     }
 }
