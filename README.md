@@ -1,5 +1,7 @@
 # Mattermost Moodle Notification Plugin
 
+<strong>Note: </strong> Archiving this repo as new [repo](https://github.com/Brightscout/mattermost-plugin-moodle-notification) is created. 
+
 A Mattermost notification plugin for Moodle. This plugin helps mattermost users to recieve notification from moodle.
 
 ![Demo](https://user-images.githubusercontent.com/33994932/127623120-8d776131-f024-4b01-b932-a10630497ed1.png)
