@@ -1,12 +1,12 @@
 # Mattermost Moodle Notification Plugin
 
-A Mattermost notification plugin for Moodle. This plugin helps mattermost users to recieve notification from moodle.
+A Mattermost notification plugin for Moodle. It helps mattermost users to recieve notification from moodle. This plugin is a required companion of the (Mattermost Message Processor plugin)[https://github.com/Brightscout/moodle-message_output_mattermost].
 
 ![Demo](https://user-images.githubusercontent.com/33994932/127623120-8d776131-f024-4b01-b932-a10630497ed1.png)
 
 ## Installation
 
-1. You can get the latest version on the [releases page](https://github.com/Brightscout/x-mattermost-plugin-moodle-notification/releases).
+1. You can get the latest version on the [releases page](https://github.com/Brightscout/mattermost-plugin-moodle-notification/releases).
 1. Upload this file in the Mattermost **System Console > Plugins > Management** page to install the plugin. To learn more about how to upload a plugin, [see the documentation](https://docs.mattermost.com/administration/plugins.html#custom-plugins).
 1. After installing the plugin, you should go to the plugin's settings in System Console and set the Webhook Secret (more about this below).
 
@@ -89,3 +89,7 @@ export MM_SERVICESETTINGS_SITEURL=http://localhost:8065
 export MM_ADMIN_TOKEN=j44acwd8obn78cdcx7koid4jkr
 make deploy
 ```
+
+---
+
+Made with &#9829; by [Brightscout](http://www.brightscout.com)
