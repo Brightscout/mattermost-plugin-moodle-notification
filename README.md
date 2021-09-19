@@ -1,6 +1,6 @@
 # Mattermost Moodle Notification Plugin
 
-A Mattermost notification plugin for Moodle. It helps mattermost users to recieve notification from moodle. This plugin is a required companion of the (Mattermost Message Processor plugin)[https://github.com/Brightscout/moodle-message_output_mattermost].
+A Mattermost notification plugin for Moodle. It helps mattermost users to recieve notification from moodle. This plugin is a required companion of the [Mattermost Message Processor plugin](https://github.com/Brightscout/moodle-message_output_mattermost).
 
 ![Demo](https://user-images.githubusercontent.com/33994932/127623120-8d776131-f024-4b01-b932-a10630497ed1.png)
 
